@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+<form method="post">
+	<input type="text" name="username">
+	<input type="password" name="password">
+	<input type="submit" name="submit">
+</form>
+</body>
+</html>
+<?php 
+
+$connect=mysqli_connect('localhost','root','','testing');
+
+//check connection
+if (isset($_POST['submit']) || $_POST['username']=="admin" || $_POST['password']=="admin")
+ {
+
+if(mysqli_connect_error($connect))
+{
+
+	echo 'failed to connect!';
+}
+
+$sql="SELECT*FROM user";
+$result=$connect->query($sql);
+
+
+	?>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Password manager</title>
+	</head>
+	<body>
+		<center>
+		<style type="text/css">
+		body{
+			background-color: black;
+			color: green;
+			font-size: 20px;
+		}
+			th,td{
+				border: 1px solid green;
+				padding: 10px;
+				border: 2px green dashed;
+			}
+			table{
+				
+			}
+		</style>
+
+	<table>
+		<th>#</th>
+	<th>User name</th>
+	<th>Password</th>
+	<?php 
+	$id=0;
+	while ($row=mysqli_fetch_assoc($result)) {
+
+			$id++;
+	 ?>
+	 <tr>
+	 	<td><?php echo $id; ?></td>
+	<td><?php echo $row['first_name']; ?></td>
+	<td><?php echo $row['last_name']; ?></td>
+</tr>
+		<?php 
+}
+ ?>
+	</table>
+</center>
+	</body>
+	</html>
+	<?php  
+}
+?>
+
